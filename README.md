@@ -35,7 +35,7 @@ pip install -r requirements.txt
 2. Build Cython extension
 
 ```shell
-USE_CYTHON=1 python setup.py build_ext --inplace
+python setup.py build_ext --inplace
 ```
 
 3. Perform changes

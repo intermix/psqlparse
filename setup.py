@@ -3,6 +3,8 @@ from setuptools.command.build_ext import build_ext
 import os.path
 import subprocess
 import sys
+    
+from Cython.Build import cythonize
 
 
 class PSqlParseBuildExt(build_ext):
@@ -17,10 +19,7 @@ Make sure you have bison and flex installed on your system.
             sys.exit(return_code)
         build_ext.run(self)
 
-
-USE_CYTHON = bool(os.environ.get('USE_CYTHON'))
-
-ext = '.pyx' if USE_CYTHON else '.c'
+ext = '.pyx'
 
 libpg_query = os.path.join('.', 'libpg_query-9.5-latest')
 
@@ -34,9 +33,7 @@ extensions = [
               library_dirs=[libpg_query])
 ]
 
-if USE_CYTHON:
-    from Cython.Build import cythonize
-    extensions = cythonize(extensions)
+extensions = cythonize(extensions)
 
 setup(name='psqlparse',
       version='1.0-rc5',
